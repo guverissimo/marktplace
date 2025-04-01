@@ -1,4 +1,4 @@
-package com.market.model;
+package com.market.user.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,10 +1,11 @@
-package com.market.service;
+package com.market.user.service;
 
-import com.market.dto.AuthResponse;
-import com.market.dto.LoginRequest;
-import com.market.dto.RegisterRequest;
-import com.market.model.User;
-import com.market.repository.UserRepository;
+import com.market.user.dto.AuthResponse;
+import com.market.user.dto.LoginRequest;
+import com.market.user.dto.RegisterRequest;
+import com.market.user.model.User;
+import com.market.user.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

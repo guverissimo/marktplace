@@ -1,9 +1,10 @@
-package com.market.controller;
+package com.market.user.controller;
 
-import com.market.dto.AuthResponse;
-import com.market.dto.LoginRequest;
-import com.market.dto.RegisterRequest;
-import com.market.service.AuthService;
+import com.market.user.dto.AuthResponse;
+import com.market.user.dto.LoginRequest;
+import com.market.user.dto.RegisterRequest;
+import com.market.user.service.AuthService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "**", allowCredentials = "true")
 public class AuthController {
 
     private final AuthService authService;

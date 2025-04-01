@@ -1,4 +1,4 @@
-package com.market.service;
+package com.market.user.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
