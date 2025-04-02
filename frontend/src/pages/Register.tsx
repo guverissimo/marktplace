@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
 
 export function Register() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export function Register() {
       await register(formData.name, formData.email, formData.password);
       navigate('/dashboard');
     } catch (err) {
-      setError('Erro ao criar conta. Tente novamente.');
+      setError('Erro ao criar conta. Tente novamente.' + err);
     } finally {
       setIsLoading(false);
     }

@@ -34,11 +34,11 @@ public class AuthService {
             user.setEmail(request.getEmail());
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             
-            userRepository.save(user);
+            user = userRepository.save(user);
             
             var jwtToken = jwtService.generateToken(user);
             
-            return new AuthResponse(jwtToken, user.getName(), user.getEmail());
+            return new AuthResponse(jwtToken, user.getId(), user.getName(), user.getEmail());
         } catch (Exception e) {
             throw new RuntimeException("Erro ao registrar usuário: " + e.getMessage());
         }
@@ -58,7 +58,7 @@ public class AuthService {
             
             var jwtToken = jwtService.generateToken(user);
             
-            return new AuthResponse(jwtToken, user.getName(), user.getEmail());
+            return new AuthResponse(jwtToken, user.getId(), user.getName(), user.getEmail());
         } catch (Exception e) {
             throw new RuntimeException("Email ou senha inválidos");
         }

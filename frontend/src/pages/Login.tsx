@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
 
 export function Login() {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export function Login() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Entre na sua conta
+            Login
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -56,6 +56,7 @@ export function Login() {
               required
               value={formData.email}
               onChange={handleChange}
+              className='border-none outline-none focus:outline-none focus:ring-0'
             />
             <Input
               label="Senha"
@@ -64,6 +65,7 @@ export function Login() {
               required
               value={formData.password}
               onChange={handleChange}
+              className='border-none outline-none focus:outline-none focus:ring-0'
             />
           </div>
 

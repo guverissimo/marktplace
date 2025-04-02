@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 interface User {
+  id: number;
   name: string;
   email: string;
 }
@@ -13,6 +14,7 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
+  setUser: (user: User | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,14 +40,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         password,
       });
 
-      const { token, name, email: userEmail } = response.data;
+      const { token, id, name, email: userEmail } = response.data;
       
       setToken(token);
-      setUser({ name, email: userEmail });
+      setUser({ id, name, email: userEmail });
       
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify({ name, email: userEmail }));
+      localStorage.setItem('user', JSON.stringify({ id, name, email: userEmail }));
     } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(error.response?.data?.message || 'Erro ao fazer login');
+      }
       throw new Error('Erro ao fazer login');
     }
   };
@@ -58,14 +63,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         password,
       });
 
-      const { token, email: userEmail } = response.data;
+      const { token, id, email: userEmail } = response.data;
       
       setToken(token);
-      setUser({ name, email: userEmail });
+      setUser({ id, name, email: userEmail });
       
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify({ name, email: userEmail }));
+      localStorage.setItem('user', JSON.stringify({ id, name, email: userEmail }));
     } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new Error(error.response?.data?.message || 'Erro ao registrar usuário');
+      }
       throw new Error('Erro ao registrar usuário');
     }
   };
@@ -86,6 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         logout,
         isAuthenticated: !!token,
+        setUser,
       }}
     >
       {children}

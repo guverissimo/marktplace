@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect } from "react";
-import { Button } from "./Button";
+import React, { useEffect } from "react";
+import { Button } from "./ui/Button";
+import { ToggleButton } from "@mui/material";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 
 const Header = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [selected, setSelected] = React.useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -25,16 +28,23 @@ const Header = () => {
     navigate("/profile");
   };
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="bg-blue-500 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/dashboard">
-              <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+              <h1 className="text-xl font-semibold text-white">Dashboard</h1>
             </Link>
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-700">Olá, {user.name}</span>
+            <ToggleButton
+              value="check"
+              selected={selected}
+              onChange={() => setSelected((prevSelected) => !prevSelected)}
+            >
+              <Brightness4Icon sx={{ color: 'white' }} className="border-none"  />
+            </ToggleButton>
             <Button variant="secondary" onClick={handleProfile}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
