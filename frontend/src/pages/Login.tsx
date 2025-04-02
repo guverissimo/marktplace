@@ -23,7 +23,7 @@ export function Login() {
       await login(formData.email, formData.password);
       navigate('/dashboard');
     } catch (err) {
-      setError('Email ou senha inválidos');
+      setError('Email ou senha inválidos' + err);
     } finally {
       setIsLoading(false);
     }
