@@ -35,10 +35,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
+      console.log('Enviando requisição de login:', { email });
+
       const response = await axios.post('http://localhost:8080/api/auth/login', {
         email,
         password,
       });
+
+      console.log('Resposta do login:', response.data);
 
       const { token, id, name, email: userEmail } = response.data;
       
@@ -48,8 +52,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify({ id, name, email: userEmail }));
     } catch (error) {
+      console.error('Erro no login:', error);
       if (error instanceof AxiosError) {
-        throw new Error(error.response?.data?.message || 'Erro ao fazer login');
+        throw new Error(error.response?.data || 'Erro ao fazer login');
       }
       throw new Error('Erro ao fazer login');
     }
@@ -57,11 +62,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (name: string, email: string, password: string) => {
     try {
+      console.log('Enviando requisição de registro:', { name, email });
+
       const response = await axios.post('http://localhost:8080/api/auth/register', {
         name,
         email,
         password,
       });
+
+      console.log('Resposta do registro:', response.data);
 
       const { token, id, email: userEmail } = response.data;
       
@@ -71,8 +80,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify({ id, name, email: userEmail }));
     } catch (error) {
+      console.error('Erro no registro:', error);
       if (error instanceof AxiosError) {
-        throw new Error(error.response?.data?.message || 'Erro ao registrar usuário');
+        throw error;
       }
       throw new Error('Erro ao registrar usuário');
     }
@@ -105,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth deve ser usado dentro de um AuthProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 } 

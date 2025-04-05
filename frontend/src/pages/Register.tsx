@@ -21,10 +21,17 @@ const Register = () => {
     setIsLoading(true);
 
     try {
+      console.log('Enviando dados de registro:', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+
       await register(formData.name, formData.email, formData.password);
       navigate('/dashboard');
-    } catch (err) {
-      setError('Erro ao criar conta. Tente novamente.' + err);
+    } catch (err: any) {
+      console.error('Erro ao registrar:', err);
+      setError(err?.response?.data || 'Erro ao criar conta. Tente novamente.');
     } finally {
       setIsLoading(false);
     }
@@ -59,6 +66,8 @@ const Register = () => {
                 label="Nome"
                 value={formData.name}
                 onChange={handleChange}
+                minLength={3}
+                maxLength={100}
               />
             </div>
             <div>
@@ -81,6 +90,7 @@ const Register = () => {
                 label="Senha"
                 value={formData.password}
                 onChange={handleChange}
+                minLength={6}
               />
             </div>
           </div>
