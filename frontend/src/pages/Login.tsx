@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 
-export function Login() {
+const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -48,50 +48,53 @@ export function Login() {
               {error}
             </div>
           )}
-          <div className="rounded-md shadow-sm space-y-4">
-            <Input
-              label="Email"
-              name="email"
-              type="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              className='border-none outline-none focus:outline-none focus:ring-0'
-            />
-            <Input
-              label="Senha"
-              name="password"
-              type="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className='border-none outline-none focus:outline-none focus:ring-0'
-            />
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                label="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                label="Senha"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
           <div>
             <Button
               type="submit"
+              disabled={isLoading}
               className="w-full"
-              isLoading={isLoading}
             >
-              Entrar
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </Button>
           </div>
-        </form>
 
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Não tem uma conta?{' '}
+          <div className="text-sm text-center">
             <Link
               to="/register"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Registre-se
+              Não tem uma conta? Registre-se
             </Link>
-          </p>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );
-} 
+};
+
+export default Login; 

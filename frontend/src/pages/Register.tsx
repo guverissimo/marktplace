@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 
-export function Register() {
+const Register = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -49,56 +49,64 @@ export function Register() {
               {error}
             </div>
           )}
-          <div className="rounded-md shadow-sm space-y-4">
-            <Input
-              label="Nome"
-              name="name"
-              type="text"
-              required
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <Input
-              label="Email"
-              name="email"
-              type="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <Input
-              label="Senha"
-              name="password"
-              type="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-            />
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                required
+                label="Nome"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                label="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                label="Senha"
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
           <div>
             <Button
               type="submit"
+              disabled={isLoading}
               className="w-full"
-              isLoading={isLoading}
             >
-              Registrar
+              {isLoading ? 'Criando conta...' : 'Criar conta'}
             </Button>
           </div>
-        </form>
 
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Já tem uma conta?{' '}
+          <div className="text-sm text-center">
             <Link
               to="/login"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Faça login
+              Já tem uma conta? Faça login
             </Link>
-          </p>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );
-} 
+};
+
+export default Register; 
